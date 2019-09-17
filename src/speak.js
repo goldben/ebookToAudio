@@ -5,13 +5,18 @@ export class Speak extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: ""
+      text: "",
+	  sentences: [],
+
+	  sentence: '',
     };
+	this.speak = this.speak.bind(this);
+
   }
-  array = string => {
-    var array = string.split(".");
-  };
-  speak = e => {
+
+
+
+  async speak(e) {
     const speech = new Speech();
     // speech.init; // will throw an exception if not browser supported
     if (speech.hasBrowserSupport()) {
@@ -22,9 +27,9 @@ export class Speak extends React.Component {
 
     const { getPlayText } = this.props;
     const text = (getPlayText && getPlayText()) || this.props.txt;
-    this.setState({ text: text });
-
-    console.log("text", text);
+	const sentences = text.split("."&&"?"&&"!");
+	let num = 0;
+    this.setState({ sentences: sentences });
 
     speech
       .init({
@@ -44,6 +49,7 @@ export class Speak extends React.Component {
     const resumeButton = document.getElementById("resume");
     const pauseButton = document.getElementById("pause");
 
+	const that = this
     setTimeout(speak, 300);
     function speak() {
       speech
@@ -53,6 +59,14 @@ export class Speak extends React.Component {
           listeners: {
             onstart: () => {
               console.log("Start utterance");
+
+
+			  			  let newSentence = sentences[num]
+			  			  console.log(newSentence);
+						  that.setState({
+				  	  	sentence: newSentence
+				  		})
+			  			  num += 1
             },
             onend: () => {
               console.log("End utterance");
@@ -86,12 +100,10 @@ export class Speak extends React.Component {
   };
 
   render() {
-    const text = this.state.text;
-    console.log("this.text", text);
     return (
       <div className="tts-bar">
         <div className="text-viewer">
-          <p>{text}</p>
+          <p>{this.state.sentence}</p>
         </div>
 
         <div className="tts">
