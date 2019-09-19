@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { ChooseFile } from "./choose-file";
 import "./app.css";
 import { ReactReader } from "./modules";
 import {
@@ -18,6 +19,7 @@ class App extends Component {
     super(props);
     this.state = {
       fullscreen: true,
+	  showFileLoader: true,
       location:
         storage && storage.getItem("epub-location")
           ? storage.getItem("epub-location")
@@ -61,7 +63,11 @@ class App extends Component {
     return (
       <Container>
 
-        <ReaderContainer fullscreen={fullscreen}>
+	<ReaderContainer fullscreen={fullscreen}>
+		  {this.state.showFileLoader && (<div className="file-container">
+				<ChooseFile/>
+			</div>)}
+
           <ReactReader
             url={
               "https://gerhardsletten.github.io/react-reader/files/alice.epub"

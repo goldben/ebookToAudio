@@ -74,3 +74,14 @@ p {
   width: 20px;
   z-index: 20;
 }
+.file-container {
+  display: flex;
+  align-items: center;
+  background-color: darkgray;
+  z-index: 7;
+  position: absolute;
+}
+.choose-file {
+  height: 200px;
+  width: 200px;
+}
