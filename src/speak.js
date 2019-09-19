@@ -115,6 +115,9 @@ export class Speak extends React.Component {
             <span id="resume"> Resume </span>
           </div>
         </div>
+		<div className="speed">
+			<div className="btn"></div>
+		</div>
       </div>
     );
   }
